@@ -1,5 +1,5 @@
 {
-  "name": "@andreas-hauschild/just-upload",
+  "name": "@andreashauschild/just-upload",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^13.0.0",
