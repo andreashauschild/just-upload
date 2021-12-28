@@ -27,7 +27,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Build with Maven
-        working-directory: ./core
+      - name: Build Quarkus Testserver with Maven
+        working-directory: ./dev/servers/quarkus
         run: mvn --batch-mode --update-snapshots verify
 
