@@ -34,7 +34,7 @@ jobs:
         run: npm ci
       - run: npm version ${{ env.NPM_VERSION_TO_PUBLISH }}
       - run: npm run lib:build --if-present
-#      - run: npm publish --access public
-#        working-directory: ./core/dist/just-upload
-#        env:
-#          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+      - run: npm publish --access public
+        working-directory: ./core/dist/just-upload
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
