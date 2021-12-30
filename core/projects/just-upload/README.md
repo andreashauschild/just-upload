@@ -5,6 +5,8 @@ provide `services` , `models` and `examples` to implement your own custom upload
 
 **Requires:** *Angular 13+*
 
+![system schema](https://github.com/andreashauschild/just-upload/blob/main/assets/just-upload-example.gif?raw=true)
+
 ### Features
 
 - Includes Hooks to `enrich/customize` request data like `query parameters` and `headers` (e.g. access tokens)
@@ -18,17 +20,16 @@ provide `services` , `models` and `examples` to implement your own custom upload
   - state of upload in percent
   - size of file in a human-readable format (KB, MB, GB)
   - MimeType recognition
+  - Example of datamodel:
+  - ![system schema](https://github.com/andreashauschild/just-upload/blob/main/assets/upload-file-model.png?raw=true)
 
-![system schema](https://github.com/andreashauschild/just-upload/blob/main/assets/just-upload-example.gif?raw=true)
+
 
 # Installation
-
 ```
 npm install @andreashauschild/just-upload
 ```
-
 # Usage
-
 To use this library you need to import the JustUploadModule into your application. Then you can import the
 
 ## Import the JustUploadModule
