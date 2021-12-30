@@ -9,6 +9,7 @@ import {BasicChunkedUploadExampleComponent} from './examples/basic-chunked-uploa
 import {BasicUploadExampleComponent} from './examples/basic-upload-example/basic-upload-example.component';
 import {BasicMultipartExampleComponent} from './examples/basic-multipart-example/basic-multipart-example.component';
 import {JustUploadModule} from 'just-upload';
+import { Documentation1Component } from './examples/documentation1/documentation1.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {JustUploadModule} from 'just-upload';
     BasicChunkedUploadExampleComponent,
     BasicUploadExampleComponent,
     BasicMultipartExampleComponent,
+    Documentation1Component,
   ],
   imports: [
     BrowserModule,

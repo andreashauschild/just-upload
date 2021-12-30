@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {
   formatBytesToHumanReadable,
   ChunkedUploadConfig,
@@ -17,6 +16,7 @@ import {
 @Component({
   selector: 'app-basic-chunked-upload-example',
   template: `
+    <h1>Basic Chunked Upload</h1>
     <input #fileUpload type="file">
     <p>Limit: {{limitHumanReadable}}</p>
     <input (click)="uploadAll()" value="Upload All" type="button">
@@ -66,7 +66,7 @@ export class BasicChunkedUploadExampleComponent implements AfterViewInit {
 
   config: ChunkedUploadConfig;
 
-  constructor(private http: HttpClient, private uploadService: JustUploadService) {
+  constructor(private uploadService: JustUploadService) {
     this.config = {
       url: "http://localhost:8080/api/chunk-upload",
       method: "POST",
@@ -106,7 +106,7 @@ export class BasicChunkedUploadExampleComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.chunkedUpload = this.uploadService.createChunkedUpload(this.fileUpload!, this.config);
     this.chunkedUpload.onChunkProcessed().subscribe(updatedFile => {
-      console.log("onChunk",updatedFile);
+      console.log("onChunk", updatedFile);
 
       this.files = updateFileList(this.files, updatedFile);
     });

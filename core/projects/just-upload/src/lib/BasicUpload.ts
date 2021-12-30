@@ -91,7 +91,7 @@ export abstract class BasicUpload {
   }
 
   /**
-   * Emits an observable if the file was processed (upload finished, server response)
+   * Emits an observable if the upload emits an file event. This can be an  HttpEventType.UploadProgress or the response if the download was finished
    */
   public onFileProcessed(): Observable<UploadFile> {
     return this.fileProcessedSubject;

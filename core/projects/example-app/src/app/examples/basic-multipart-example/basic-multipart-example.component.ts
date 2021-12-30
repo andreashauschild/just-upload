@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {
   AfterFileSend,
   BeforeFileSend,
@@ -16,6 +15,7 @@ import {
 @Component({
   selector: 'app-basic-multipart-example',
   template: `
+    <h1>Basic Multipart Upload</h1>
     <input #fileUpload type="file">
     <p>Limit: {{limitHumanReadable}}</p>
     <input (click)="uploadAll()" value="Upload All" type="button">
@@ -64,14 +64,14 @@ export class BasicMultipartExampleComponent implements AfterViewInit {
   config: UploadConfig;
 
 
-  constructor(private http: HttpClient, private uploadService: JustUploadService) {
+  constructor(private service: JustUploadService) {
     this.config = {
       url: "http://localhost:8080/api/basic-upload/multipart-form",
       method: "POST",
       multi: true,
       maxFileSize: 100 * 1024, // 100kb
       uploadImmediately: false,
-      accept:'*',
+      accept: '*',
 
       beforeFileSendHook(before: BeforeFileSend) {
         const file = {...before.file}
@@ -102,7 +102,7 @@ export class BasicMultipartExampleComponent implements AfterViewInit {
 
   // Be aware that we user AfterViewInit here and no onInit
   ngAfterViewInit(): void {
-    this.upload = this.uploadService.createMultipartFormUpload(this.fileUpload!, this.config);
+    this.upload = this.service.createMultipartFormUpload(this.fileUpload!, this.config);
     this.upload.onFileProcessed().subscribe(updatedFile => {
       this.files = updateFileList(this.files, updatedFile)
     });
