@@ -1,6 +1,9 @@
 import {formatBytesToHumanReadable} from './Helpers';
 import {ChunkedUploadFile} from './ChunkedUploadFile';
 
+/**
+ * Type tha represents the data of a chunk
+ */
 export type Chunk = {
   data: any
   index: number
@@ -8,6 +11,9 @@ export type Chunk = {
   offset: number
 }
 
+/**
+ * Data object for a chunk of the uploaded file
+ */
 export class FileChunk {
   public uploadFile: ChunkedUploadFile;
 

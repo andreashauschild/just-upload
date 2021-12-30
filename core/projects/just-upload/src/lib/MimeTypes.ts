@@ -1,3 +1,6 @@
+/**
+ * Support functions for getting the mime type by file extension
+ */
 export type MimeType = {
   extension: 'aac'
     | 'abw'

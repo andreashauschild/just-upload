@@ -6,7 +6,8 @@ import {RequestParams, UploadConfig} from './Models';
 import {BasicUpload} from './BasicUpload';
 
 /**
- * Implementation class of a upload. In general it  is a chunked upload with exactly one chunk.
+ * @author Andreas Hauschild
+ * Implementation class that handles a file upload
  */
 export class Upload extends BasicUpload {
 
@@ -16,20 +17,22 @@ export class Upload extends BasicUpload {
   }
 
   doRequest(uploadFile: UploadFile, params: RequestParams): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData()
-    formData.append("file", uploadFile.file, uploadFile.file.name)
-    let httpParams = new HttpParams().appendAll(params.query);
+    let queryParams = new HttpParams().appendAll(params.query);
+    let headers = new HttpHeaders(params.header);
 
     const req = new HttpRequest<File>(
       this.config.method,
       this.config.url,
       uploadFile.file, {
-        headers: new HttpHeaders(params.header),
-        params: httpParams,
+        headers: headers,
+        params: queryParams,
         reportProgress: true
       });
     return this.http.request(req);
   }
 
+  getDefaultRequestParams(): RequestParams {
+    return {query: {}, header: {'Content-Type': 'application/octet-stream'}};
+  }
 
 }

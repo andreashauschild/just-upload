@@ -1,6 +1,39 @@
 import {FileChunk} from './FileChunk';
-import {HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {UploadFile} from './UploadFile';
+
+/**
+ * @author Andreas Hauschild
+ * This file contains the basic models used by this library
+ */
+
+
+export enum UploadState {
+  /**
+   * File is ready to be uploaded
+   */
+  READY = "READY",
+
+  /**
+   * File exceeds file limit, upload will be disabled
+   */
+  SIZE_LIMIT_EXCEEDED = "SIZE_LIMIT_EXCEEDED",
+
+  /**
+   * File is uploading
+   */
+  UPLOADING = "UPLOADING",
+
+  /**
+   * Upload of the file failed
+   */
+  UPLOAD_FAILED = "UPLOAD_FAILED",
+
+  /**
+   * Upload of file was successful
+   */
+  UPLOAD_SUCCESS = "UPLOAD_SUCCESS",
+}
 
 export interface BaseUploadConfig {
   // http endpoint of the upload
@@ -24,8 +57,8 @@ export interface BaseUploadConfig {
 }
 
 export type RequestParams = {
-  query: {[name: string]: string},
-  header:{[name: string]: string}
+  query: { [name: string]: string },
+  header: { [name: string]: string }
 }
 
 export interface UploadConfig extends BaseUploadConfig {
@@ -59,7 +92,7 @@ export interface BeforeFileSend {
 }
 
 export interface AfterFileSend {
-  response: HttpResponse<Object> | null,
+  response: HttpResponse<any> | HttpErrorResponse| undefined,
   file: UploadFile,
   params: RequestParams;
 }
@@ -71,7 +104,7 @@ export interface BeforeChunkSend {
 }
 
 export interface AfterChunkSend {
-  response: HttpResponse<Object>,
+  response: HttpResponse<any> | HttpErrorResponse| undefined | void,
   chunk: FileChunk,
   requestParams: RequestParams;
 }

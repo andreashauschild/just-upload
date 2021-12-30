@@ -1,16 +1,24 @@
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {ElementRef} from '@angular/core';
 import {firstValueFrom, Observable, Subject} from 'rxjs';
 import {UploadFileReader} from './UploadFileReader';
 import {FileChunk} from './FileChunk';
-import {ChunkedUploadConfig, RequestParams} from './Models';
+import {ChunkedUploadConfig, RequestParams, UploadState} from './Models';
 import {ChunkedUploadFile} from './ChunkedUploadFile';
 
 /**
- * Implementation class of a chunked upload
+ * @author Andreas Hauschild
+ * Implementation class that handles a chunked file upload
  */
 export class ChunkedUpload {
+  /**
+   * HTML file input-Element of the upload
+   */
   input: ElementRef;
+
+  /**
+   * configuration of the chunked upload
+   */
   config: ChunkedUploadConfig;
 
   private chunkProcessedSubject = new Subject<ChunkedUploadFile>();
@@ -67,6 +75,9 @@ export class ChunkedUpload {
         if (input?.files?.length) {
           for (let index = 0; index < input?.files?.length; index++) {
             const uploadFile = new ChunkedUploadFile(input.files[index], this.config.chunkSize);
+            if (uploadFile.size > this.config.maxFileSize!) {
+              uploadFile.state = UploadState.SIZE_LIMIT_EXCEEDED;
+            }
             this.fileAddedSubject.next(uploadFile);
             if (this.config.uploadImmediately) {
               this.uploadFile(uploadFile);
@@ -79,22 +90,38 @@ export class ChunkedUpload {
 
   public uploadFile(file: ChunkedUploadFile): void {
 
+    if (file.state === UploadState.SIZE_LIMIT_EXCEEDED) {
+      return;
+    }
+    let requestError = false;
     const reader = new UploadFileReader(file);
     reader.readChunked(async chunk => {
-      let headers = {'Content-Type': 'application/octet-stream'}
-      let params = {query: {}, header: headers} as RequestParams
+      if (!requestError) {
+        let headers = {'Content-Type': 'application/octet-stream'}
+        let params = {query: {}, header: headers} as RequestParams
+        chunk.uploadFile = chunk.uploadFile.clone();
+        chunk.uploadFile.state = UploadState.UPLOADING;
+        chunk.uploadFile.loaded = chunk.chunk.size;
 
-      if (this.config?.beforeChunkSendHook) {
-        params = this.config.beforeChunkSendHook({chunk, requestParams: params});
+        if (this.config?.beforeChunkSendHook) {
+          params = this.config.beforeChunkSendHook({chunk, requestParams: params});
+        }
+        let response;
+
+
+        response = await this.doRequest(chunk, params).catch(error => {
+          response = error as HttpErrorResponse;
+          chunk.uploadFile.state = UploadState.UPLOAD_FAILED;
+          requestError = true;
+        });
+
+        if (this?.config?.afterChunkSendHook) {
+          this.config.afterChunkSendHook({response, chunk, requestParams: params});
+        }
+
+        this.chunkProcessedSubject.next(chunk.uploadFile);
       }
 
-      let response = await this.doRequest(chunk, params);
-
-      if (this?.config?.afterChunkSendHook) {
-        this.config.afterChunkSendHook({response, chunk, requestParams: params});
-      }
-
-      this.chunkProcessedSubject.next(chunk.uploadFile);
     })
   }
 

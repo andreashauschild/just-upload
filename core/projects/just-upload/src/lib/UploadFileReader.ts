@@ -1,7 +1,10 @@
 import {FileChunk} from './FileChunk';
 import {ChunkedUploadFile} from './ChunkedUploadFile';
 
-
+/**
+ * @author Andreas Hauschild
+ * Support class for splitting a file in chunks
+ */
 export class UploadFileReader {
 
 

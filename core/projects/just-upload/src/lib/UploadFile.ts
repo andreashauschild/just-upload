@@ -1,20 +1,21 @@
 import {BaseFile} from './BaseFile';
 
-
+/**
+ * @author Andreas Hauschild
+ * Data class the represents a file is uploaded
+ */
 export class UploadFile extends BaseFile {
-
-  public data: any;
-
 
   constructor(file: File) {
     super(file);
   }
 
-  override clone(): UploadFile {
-    const clone = super.clone() as UploadFile;
-    clone.data = this.data;
+  clone(): UploadFile {
+    const id = this.fileId;
+    const loaded = this.loaded;
+    const clone = new UploadFile(this.file);
+    clone.fileId = id;
+    clone.loaded = loaded;
     return clone;
   }
-
-
 }

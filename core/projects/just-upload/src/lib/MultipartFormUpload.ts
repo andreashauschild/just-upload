@@ -5,6 +5,10 @@ import {UploadFile} from './UploadFile';
 import {RequestParams, UploadConfig} from './Models';
 import {BasicUpload} from './BasicUpload';
 
+/**
+ * @author Andreas Hauschild
+ * Implementation class that multipart form uploads
+ */
 export class MultipartFormUpload extends BasicUpload {
 
 
@@ -29,5 +33,8 @@ export class MultipartFormUpload extends BasicUpload {
     return this.http.request(req);
   }
 
+  getDefaultRequestParams(): RequestParams {
+    return {query: {}, header: {}};
+  }
 
 }
