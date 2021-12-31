@@ -36,7 +36,7 @@ To use this library you need to import the JustUploadModule into your applicatio
 
 To use this library you need to import it in your angular `app.module.ts`
 
-```
+```typescript
 @NgModule({
   declarations: [
     AppComponent
@@ -53,7 +53,7 @@ export class AppModule {
 
 ## Inject the Service in your Component
 
-```
+```typescript
 constructor(private service: JustUploadService)
 ```
 
@@ -65,7 +65,7 @@ After the creation of the `upload object` you can listen to changes if you subsc
 
 The most simple upload looks like this:
 
-```
+```typescript
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {JustUploadService, Upload, UploadConfig} from 'just-upload';
 
