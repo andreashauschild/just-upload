@@ -30,7 +30,7 @@ export abstract class BaseFile {
   public size!: number;
 
   /**
-   * size of file as human readable string like: 100kb, 2MB, 1gb
+   * size of file as human readable string like: 100kb, 2MB, 1GB
    */
   public sizeHumanReadable!: string;
 

@@ -57,14 +57,15 @@ export class AppModule {
 constructor(private service: JustUploadService)
 ```
 
-## Concepts - Basic Upload and Basic Upload Multipart
+## Concepts - Basic Upload
 The `JustUploadService` helps you to create an `upload object` which provides all necessary functions to implement your upload.
 To create an `upload` you need to provide a reference to a `HTML file input element` and a `configuration`.
 
 After the creation of the `upload object` you can listen to changes if you subscribe to `onFileProcessed` and `onFiledAdded`.
 
-The most simple upload looks like this:
+The most simple upload looks like this (The code can be found here: [example1](https://github.com/andreashauschild/just-upload/blob/main/core/projects/example-app/src/app/examples/documentation1/documentation1.component.ts)):
 
+Info the backend of the upload server is implemented in java with quarkus. You can find the REST-Endpoint here: [BasicUploadResource.java](https://github.com/andreashauschild/just-upload/blob/main/dev/servers/quarkus/src/main/java/de/litexo/BasicUploadResource.java)
 ```typescript
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {JustUploadService, Upload, UploadConfig} from 'just-upload';
@@ -116,4 +117,39 @@ export class Documentation1Component implements AfterViewInit {
 
 }
 ```
-https://github.com/andreashauschild/just-upload/blob/af05daf922213204b8fe10cc841b64b43e809427/core/angular.json#L16-L21
+
+## UploadConfig - UploadFile - Upload
+
+### UploadConfig
+The `UploadConfig` allows the following configurations:
+
+| Attribute   |      Description      |
+|----------|---------------|
+| `url` |  http endpoint of the upload |
+| `uploadImmediately` |    if true files will immediately be uploaded after there added to the upload **default: false**   |
+| `method` | http request method that should be used (`POST`, `PUT`, `PATCH`) |
+| `maxFileSize` | maximal size of a file that can be added **default: 100MB** |
+| `multi` |   `false` = single file upload; `true` = multi file upload |
+| `accept` |  accept value of the input field e.g. `*`, `png jpeg jpg`, see: [input accept](https://www.w3schools.com/tags/att_input_accept.asp)  |
+| `beforeFileSendHook?(before: BeforeFileSend): RequestParams;` | `callback function` that executes before the file is send. this is used to add custom `header` or `query parameters` to the request. These custom parameters must be returned as result of the callback function |
+| `afterFileSendHook?(after: AfterFileSend): void;` | `callback function` that executes after the file is send |
+
+### UploadFile
+The `UploadFile` is the file data model. It holds the browser file an additional information:
+
+| Attribute   |      Description      |
+|----------|---------------|
+| `file` | reference to the original file object  |
+| `name` | name of the file |
+| `extension` |  extension of the file e.g.: `png`, `jpg`  |
+| `size` |  `size` in `bytes` of the file  |
+| `sizeHumanReadable` | size of file as human readable string like: `100kb`, `2MB`, `1GB`  |
+| `mimeType` | MimeType of the file [see MimeTypes.ts](https://github.com/andreashauschild/just-upload/blob/main/core/projects/just-upload/src/lib/MimeTypes.ts)  |
+| `fileId` | id of the file that is uploaded. This is generated: <size>_<name>_<timestamp> like 128_thumbnail.png_1640697283494  |
+| `state` |  current upload state of the file [see UploadState](https://github.com/andreashauschild/just-upload/blob/70fe1ffd6a8d06e88e365aff78487e914c5d7c9c/core/projects/just-upload/src/lib/Models.ts#L11-L36) |
+| `loadedHumanReadable` | current value of uploaded data as human readable string  |
+| `loadedPercent` | totally transferred of file in percent |
+| `httpResponse` |  stores the `httpResponse` of the upload. can be used for specialized response handling. can be `HttpResponse`, `HttpErrorResponse` or `undefined` if the file was not send yet  |
+
+### Upload
+The `Upload` will be created by a factory method of the `JustUploadService`

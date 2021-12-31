@@ -25,7 +25,7 @@ export enum UploadState {
   UPLOADING = "UPLOADING",
 
   /**
-   * Upload of the file failed
+   * Upload of file failed
    */
   UPLOAD_FAILED = "UPLOAD_FAILED",
 
