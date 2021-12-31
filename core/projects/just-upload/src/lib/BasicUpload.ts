@@ -117,7 +117,7 @@ export abstract class BasicUpload {
 
   abstract getDefaultRequestParams(): RequestParams;
 
-  abstract doRequest(uploadFile: UploadFile, params: RequestParams): Observable<HttpEvent<any>>;
+  protected abstract doRequest(uploadFile: UploadFile, params: RequestParams): Observable<HttpEvent<any>>;
 
   private initUpload() {
     const input = this.input?.nativeElement as HTMLInputElement;
