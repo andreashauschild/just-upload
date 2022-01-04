@@ -98,7 +98,7 @@ export class Documentation1Component implements AfterViewInit {
     }
   }
 
-  // Use ngAfterViewInit because in the lifecycle step the 'fileUpload' is set
+  // Use ngAfterViewInit because in the lifecycle step the 'upload' is set
   ngAfterViewInit(): void {
 
     // Setup the upload
