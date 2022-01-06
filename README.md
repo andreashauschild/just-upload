@@ -18,4 +18,4 @@ The `frontend` contains of the `just-upload` library and the `example-app`
    - Execute library `ng build just-upload --watch=true`
    - Execute example `ng serve example-app`
 
-
+XXXX
