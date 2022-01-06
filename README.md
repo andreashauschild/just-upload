@@ -17,3 +17,5 @@ The `frontend` contains of the `just-upload` library and the `example-app`
    - Navigate to: `just-upload/dev/servers/quarkus`
    - Execute library `ng build just-upload --watch=true`
    - Execute example `ng serve example-app`
+
+test
