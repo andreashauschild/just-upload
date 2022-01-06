@@ -152,4 +152,4 @@ The `UploadFile` is the file data model. It holds the browser file an additional
 | `httpResponse` |  stores the `httpResponse` of the upload. can be used for specialized response handling. can be `HttpResponse`, `HttpErrorResponse` or `undefined` if the file was not send yet  |
 
 ### Upload
-The `Upload` will be created by a factory method of the `JustUploadService`. It is the main object you will work with.
+The `Upload` will be created by a factory method of the `JustUploadService`. It is the main object you will work with. 
