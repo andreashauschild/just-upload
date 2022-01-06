@@ -11,10 +11,16 @@ provide `services` , `models` and `examples` to implement your own custom upload
 
 - Includes Hooks to `enrich/customize` request data like `query parameters` and `headers` (e.g. access tokens)
 - Supports different upload types:
-  - `Basic Upload` - send file as `application/octet-stream`
+  - `Basic Upload` - send file as `application/octet-stream` 
+    - [see Basic Upload Example](https://github.com/andreashauschild/just-upload/blob/main/core/projects/example-app/src/app/examples/basic-upload-example/basic-upload-example.component.ts)
+    - [Quarkus Endpoint (BasicUploadResource.java)](https://github.com/andreashauschild/just-upload/blob/main/dev/servers/quarkus/src/main/java/de/litexo/BasicUploadResource.java)
   - `Basic Upload Multipart` - uploads files as `multipart/form-data`
+    - [see Basic Multipart Example](https://github.com/andreashauschild/just-upload/blob/main/core/projects/example-app/src/app/examples/basic-multipart-example/basic-multipart-example.component.ts)
+    - [Quarkus Endpoint (BasicUploadResource.java)](https://github.com/andreashauschild/just-upload/blob/main/dev/servers/quarkus/src/main/java/de/litexo/BasicUploadResource.java)
   - `Chunked Upload` - Splits a file in chunks and sends for each chunk a http request. This can be used to upload very large files which may exceeding the size of a single
-    request.
+    request. 
+    - [see Basic Chunked Upload Example](https://github.com/andreashauschild/just-upload/blob/main/core/projects/example-app/src/app/examples/basic-chunked-upload-example/basic-chunked-upload-example.component.ts)
+    - [Quarkus Endpoint (ChunkUploadResource.java)](https://github.com/andreashauschild/just-upload/blob/main/dev/servers/quarkus/src/main/java/de/litexo/ChunkUploadResource.java)
 - Provides a lot of useful information out of the box
   - State update via Observables while uploading
   - State of upload in percent
@@ -152,4 +158,10 @@ The `UploadFile` is the file data model. It holds the browser file an additional
 | `httpResponse` |  stores the `httpResponse` of the upload. can be used for specialized response handling. can be `HttpResponse`, `HttpErrorResponse` or `undefined` if the file was not send yet  |
 
 ### Upload
-The `Upload` will be created by a factory method of the `JustUploadService`. It is the main object you will work with. 
+The `Upload` will be created by a factory method of the `JustUploadService`. It is the main object you will work with.
+
+| Methods   |      Description      |
+|----------|---------------|
+| `uploadFile(uploadFile: UploadFile): void` | Method to trigger the upload process of the given file. The method can be used if `uploadImmediately` is disabled  |
+| `onFileProcessed(): Observable<UploadFile>` | Subscribe for receiving progress chances while the file is processed. Returns`UploadFile` with the current state. **Info:** If you are uploading files with a very good connection (e.g. local server) you may get only one processing update   |
+| `onFiledAdded(): Observable<UploadFile>` | Subscribe for receiving the files that are added to the `input` element  |
