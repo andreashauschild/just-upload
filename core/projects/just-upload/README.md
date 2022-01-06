@@ -40,7 +40,7 @@ To use this library you need to import the JustUploadModule into your applicatio
 
 ## Import the JustUploadModule
 
-To use this library you need to import it in your angular `app.module.ts`
+To use this library you need to import it in your angular `app.module.ts`. Furthermore the `HttpClientModule`  from `@angular/common/http` must also be imported.
 
 ```typescript
 @NgModule({
@@ -48,6 +48,7 @@ To use this library you need to import it in your angular `app.module.ts`
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     JustUploadModule
   ],
   providers: [],
