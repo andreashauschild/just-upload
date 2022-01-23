@@ -62,6 +62,14 @@
       <artifactId>quarkus-undertow</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-scheduler</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
     <!-- Custom dependencies    -->
     <dependency>
       <groupId>commons-fileupload</groupId>
