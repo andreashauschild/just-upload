@@ -37,7 +37,7 @@ public class Housekeeping {
 
         for (File f : files) {
             try {
-                if (FileUtils.lastModified(f) > deleteFileAge * 1000) {
+                if (FileUtils.lastModified(f) < (System.currentTimeMillis()+deleteFileAge * 1000)) {
                     toDelete.add(f);
                 }
             } catch (Exception e) {
