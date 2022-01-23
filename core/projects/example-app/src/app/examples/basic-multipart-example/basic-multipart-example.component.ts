@@ -53,8 +53,6 @@ export class BasicMultipartExampleComponent implements AfterViewInit {
   @ViewChild("fileUpload", {static: false})
   fileUpload: ElementRef | undefined;
 
-  finished = false;
-
   files: UploadFile[] = []
 
   upload?: MultipartFormUpload;
