@@ -66,7 +66,7 @@ export class BasicMultipartExampleComponent implements AfterViewInit {
 
   constructor(private service: JustUploadService) {
     this.config = {
-      url: "http://localhost:8080/api/basic-upload/multipart-form",
+      url: "https://just-upload.litexo.de/api/basic-upload/multipart-form",
       method: "POST",
       multi: true,
       maxFileSize: 100 * 1024, // 100kb

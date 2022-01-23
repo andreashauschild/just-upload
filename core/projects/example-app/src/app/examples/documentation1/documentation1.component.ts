@@ -24,7 +24,7 @@ export class Documentation1Component implements AfterViewInit {
   constructor(private service: JustUploadService) {
     // initialize basic config this will send the file immediately to the given endpoint with a post request
     this.config = {
-      url: "http://localhost:8080/api/basic-upload/single-binary",
+      url: "https://just-upload.litexo.de/api/basic-upload/single-binary",
       method: "POST"
     }
   }

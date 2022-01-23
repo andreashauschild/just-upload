@@ -68,7 +68,7 @@ export class BasicChunkedUploadExampleComponent implements AfterViewInit {
 
   constructor(private uploadService: JustUploadService) {
     this.config = {
-      url: "http://localhost:8080/api/chunk-upload",
+      url: "https://just-upload.litexo.de/api/chunk-upload",
       method: "POST",
       multi: true,
       uploadImmediately: false,
