@@ -18,10 +18,10 @@ export abstract class BasicUpload {
   constructor(protected http: HttpClient, input: ElementRef, config: UploadConfig) {
 
     if (!config) {
-      throw `Error: Missing config for upload!`
+      throw new Error(`Error: Missing config for upload!`);
     }
     if (!input) {
-      throw `Error: Missing input element for upload!`
+      throw  new Error(`Error: Missing input element for upload!`);
     }
 
 
@@ -124,20 +124,41 @@ export abstract class BasicUpload {
     if (input) {
       this.input.nativeElement.accept = this.config.accept;
       this.input.nativeElement.multiple = this.config.multi;
-      input.onchange = (e => {
-        if (input?.files?.length) {
-          for (let index = 0; index < input?.files?.length; index++) {
-            const uploadFile = new UploadFile(input.files[index]);
-            if (uploadFile.size > this.config.maxFileSize!) {
-              uploadFile.state = UploadState.SIZE_LIMIT_EXCEEDED;
-            }
-            this.fileAddedSubject.next(uploadFile);
-            if (this.config.uploadImmediately) {
-              this.uploadFile(uploadFile);
-            }
-          }
+      input.onchange = (_ => {
+        if (input?.files) {
+          this.addFiles(input.files);
         }
       });
+    }
+  }
+
+  /**
+   * Adds a file to this upload
+   * @param file
+   */
+  public addFile(file: File | null | undefined): void {
+    if (file) {
+      const uploadFile = new UploadFile(file);
+      if (uploadFile.size > this.config.maxFileSize!) {
+        uploadFile.state = UploadState.SIZE_LIMIT_EXCEEDED;
+      }
+      this.fileAddedSubject.next(uploadFile);
+      if (this.config.uploadImmediately) {
+        this.uploadFile(uploadFile);
+      }
+    }
+  }
+
+  /**
+   * Adds a FileList to this upload
+   * @param fileList
+   */
+  public addFiles(fileList: FileList | null | undefined): void {
+
+    if (fileList) {
+      for (let index = 0; index < fileList.length; index++) {
+        this.addFile(fileList.item(index));
+      }
     }
   }
 }
