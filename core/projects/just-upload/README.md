@@ -19,7 +19,7 @@ provide `services` , `models` and `examples` to implement your own custom upload
   - `Basic Upload Multipart` - uploads files as `multipart/form-data`
     - [see Basic Multipart Example](https://github.com/andreashauschild/just-upload/blob/main/core/projects/example-app/src/app/examples/basic-multipart-example/basic-multipart-example.component.ts)
     - [Quarkus Endpoint (BasicUploadResource.java)](https://github.com/andreashauschild/just-upload/blob/main/dev/servers/quarkus/src/main/java/de/litexo/BasicUploadResource.java)
-  - `Chunked Upload` - Splits a file in chunks and sends for each chunk a http request. This can be used to upload very large files which may exceeding the size of a single
+  - `Chunked Upload` - Splits a file in chunks and sends for each chunk a http request. This can be used to upload very large files which may exceeding the size limit of a single
     request. 
     - [see Basic Chunked Upload Example](https://github.com/andreashauschild/just-upload/blob/main/core/projects/example-app/src/app/examples/basic-chunked-upload-example/basic-chunked-upload-example.component.ts)
     - [Quarkus Endpoint (ChunkUploadResource.java)](https://github.com/andreashauschild/just-upload/blob/main/dev/servers/quarkus/src/main/java/de/litexo/ChunkUploadResource.java)
@@ -169,11 +169,13 @@ The `UploadFile` is the file data model. It holds the browser file and additiona
 The `Upload` and `MultipartFormUpload` will be created by a factory method of the `JustUploadService`. It is the main object you will work with. In case of `MultipartFormUpload` every file will be sent as single `multipart/form-data` request. This means if you have 5 files in your file list, they will be sent in 5 separate requests. 
 If you use `Upload` every file will be sent as an `application/octet-stream` to the server.
 
-| Methods   |      Description      |
-|----------|---------------|
-| `uploadFile(uploadFile: UploadFile): void` | Method to trigger the upload process of the given file. The method can be used if `uploadImmediately` is disabled  |
-| `onFileProcessed(): Observable<UploadFile>` | Subscribe for receiving progress chances while the file is processed. Returns`UploadFile` with the current state. **Info:** If you are uploading files with a very good connection (e.g. local server) you may get only one processing update   |
-| `onFiledAdded(): Observable<UploadFile>` | Subscribe for receiving the files that are added to the `input` element  |
+| Methods   | Description                                                                                                                                                                                                                                   |
+|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `uploadFile(uploadFile: UploadFile): void` | Method to trigger the upload process of the given file. The method can be used if `uploadImmediately` is disabled                                                                                                                             |
+| `onFileProcessed(): Observable<UploadFile>` | Subscribe for receiving progress chances while the file is processed. Returns`UploadFile` with the current state. **Info:** If you are uploading files with a very good connection (e.g. local server) you may get only one processing update |
+| `onFiledAdded(): Observable<UploadFile>` | Subscribe for receiving the files that are added to the `input` element                                                                                                                                                                       |
+| `addFile(file: File): void` | Adds the File): to the upload. This can be used add files programmatically if needed. For example if you build drag and drop components.|
+| `addFiles(fileList: FileList): void` | Adds the FileList to the upload. This can be used add files programmatically if needed. For example if you build drag and drop components.|
 
 ## ChunkedUploadConfig - ChunkedUploadFile - ChunkedUpload
 Chunked Upload - Splits a file in chunks and sends for each chunk a http request. This can be used to upload very large files which may exceeding the size of a single
@@ -237,3 +239,5 @@ Every chunk will be sent as an `application/octet-stream` to the server.
 | `onChunkProcessed(): Observable<ChunkedUploadFile>` | Subscribe to this function to handle chunks after there where send to server  |
 | `onFiledAdded(): Observable<ChunkedUploadFile>` |  Subscribe for receiving the files that are added to the `input` element  |
 | `uploadFile(file: ChunkedUploadFile): void` | Method to trigger the upload process of the given file. The method can be used if `uploadImmediately` is disabled  |
+| `addFile(file: File): void` | Adds the File): to the upload. This can be used add files programmatically if needed. For example if you build drag and drop components.|
+| `addFiles(fileList: FileList): void` | Adds the FileList to the upload. This can be used add files programmatically if needed. For example if you build drag and drop components.|
