@@ -7,5 +7,14 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreashauschild/just-upload.git"
+  },
+  "author": "Andreas Hauschild",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreashauschild/node-red-contrib-ethers-node/issues"
   }
 }
